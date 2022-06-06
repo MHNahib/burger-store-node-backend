@@ -1,4 +1,6 @@
 const bcrypt = require("bcrypt");
+const { RefreshToken } = require("../../models/refreshToken");
+require("dotenv").config();
 const { User, loginValidation } = require("../../models/User");
 const CustomErrorHandler = require("../../services/CustomErrorHandler");
 const JwtService = require("../../services/JwtService");
@@ -23,7 +25,15 @@ const loginController = {
       "1h"
     );
 
-    res.json({ accessToken });
+    const refreshToken = JwtService.sign(
+      { _id: user._id, role: user.role },
+      "30d",
+      process.env.REFRESH_SECRET
+    );
+
+    await RefreshToken.create({ token: refreshToken });
+
+    res.json({ accessToken, refreshToken });
   },
 };
 
