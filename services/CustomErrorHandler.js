@@ -13,6 +13,10 @@ class CustomErrorHandler extends Error {
     return new CustomErrorHandler(401, message);
   }
 
+  static unAuth(message) {
+    return new CustomErrorHandler(401, message);
+  }
+
   static notFound(message) {
     return new CustomErrorHandler(404, message);
   }
