@@ -121,6 +121,14 @@ const productController = {
 
     return res.json(products);
   },
+
+  async getSingleProduct(req, res, next) {
+    const products = await Product.findOne({ _id: req.params.id }).select(
+      "-createdAt -updatedAt -__v"
+    );
+
+    return res.json(products);
+  },
 };
 
 module.exports = productController;
