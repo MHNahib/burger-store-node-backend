@@ -9,6 +9,7 @@ const {
   authController,
   userController,
   refreshController,
+  productController,
 } = require("../controllers");
 const auth = require("../middleware/auth");
 
@@ -17,5 +18,6 @@ router.post("/login", authController.login);
 router.get("/me", auth, userController.me);
 router.post("/refresh", refreshController.refresh);
 router.post("/logout", authController.logout);
+router.post("/products", productController.store);
 
 module.exports = router;
