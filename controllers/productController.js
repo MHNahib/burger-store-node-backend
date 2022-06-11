@@ -70,18 +70,17 @@ const productController = {
       // console.log(req.file);
       const { error } = productUploadValidation(req.body);
 
-      if (req.file) {
-        // delete file if validation fials
-        if (error) {
+      // delete file if validation fials
+      if (error) {
+        if (req.file) {
           // Delete the uploaded file
           fs.unlink(`${appRoot}/${filePath}`, (err) => {
             if (err) {
               return next(CustomErrorHandler.serverError(err.message));
             }
           });
-
-          return next(error);
         }
+        return next(error);
       }
 
       const product = await Product.findOneAndUpdate(
@@ -96,6 +95,22 @@ const productController = {
       );
 
       res.status(201).json(product);
+    });
+  },
+
+  async delete(req, res, mext) {
+    const product = await Product.findOneAndRemove({ _id: req.params.id });
+    if (!product) {
+      return next(new Error("Nothing to delete"));
+    }
+
+    const imagePath = product.image;
+
+    fs.unlink(`${appRoot}/${imagePath}`, (err) => {
+      if (err) {
+        return next(CustomErrorHandler.serverError());
+      }
+      return res.json(product);
     });
   },
 };
