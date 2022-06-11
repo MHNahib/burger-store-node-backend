@@ -11,13 +11,17 @@ const {
   refreshController,
   productController,
 } = require("../controllers");
+
 const auth = require("../middleware/auth");
+const admin = require("../middleware/admin");
 
 router.post("/register", registerController.register);
 router.post("/login", authController.login);
 router.get("/me", auth, userController.me);
 router.post("/refresh", refreshController.refresh);
 router.post("/logout", authController.logout);
-router.post("/products", productController.store);
+
+router.post("/products", [auth, admin], productController.store);
+router.put("/products/:id", [auth, admin], productController.update);
 
 module.exports = router;
