@@ -104,7 +104,7 @@ const productController = {
       return next(new Error("Nothing to delete"));
     }
 
-    const imagePath = product.image;
+    const imagePath = product._doc.image;
 
     fs.unlink(`${appRoot}/${imagePath}`, (err) => {
       if (err) {
