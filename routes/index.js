@@ -28,4 +28,6 @@ router.delete("/products/:id", [auth, admin], productController.delete);
 router.get("/products/", productController.getProducts);
 router.get("/products/:id", productController.getSingleProduct);
 
+router.post("/products/cart-items", productController.cartItems);
+
 module.exports = router;

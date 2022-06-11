@@ -129,6 +129,14 @@ const productController = {
 
     return res.json(products);
   },
+
+  async cartItems(req, res, next) {
+    const products = await Product.find({
+      _id: { $in: req.body.ids },
+    }).select("-createdAt -updatedAt -__v");
+
+    return res.json(products);
+  },
 };
 
 module.exports = productController;
