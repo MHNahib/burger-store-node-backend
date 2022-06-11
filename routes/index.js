@@ -25,4 +25,6 @@ router.post("/products", [auth, admin], productController.store);
 router.put("/products/:id", [auth, admin], productController.update);
 router.delete("/products/:id", [auth, admin], productController.delete);
 
+router.get("/products/", productController.getProducts);
+
 module.exports = router;

@@ -113,6 +113,12 @@ const productController = {
       return res.json(product);
     });
   },
+
+  async getProducts(req, res, next) {
+    const products = await Product.find();
+
+    return res.json(products);
+  },
 };
 
 module.exports = productController;
