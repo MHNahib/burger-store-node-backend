@@ -115,7 +115,9 @@ const productController = {
   },
 
   async getProducts(req, res, next) {
-    const products = await Product.find();
+    const products = await Product.find()
+      .select("-createdAt -updatedAt -__v")
+      .sort({ _id: -1 });
 
     return res.json(products);
   },
