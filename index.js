@@ -15,6 +15,8 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+app.use("/uploads", express.static("uploads"));
+
 app.use("/", require("./routes/home"));
 app.use("/api/v1", require("./routes/index"));
 

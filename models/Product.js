@@ -18,10 +18,14 @@ const productSchema = new mongoose.Schema(
     image: {
       type: String,
       required: true,
+      get: (image) => {
+        return `${process.env.APP_URL}/${image}`;
+      },
     },
   },
   {
     timestamps: true,
+    toJSON: { getters: true },
   }
 );
 
